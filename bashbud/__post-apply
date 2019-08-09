@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# delete files only used to build:
+# program.sh and init.sh
+
+projectdir=$1
+rm -f "$projectdir"/___{version,envs,help,getopt}
+mv -f "$1/program.sh" "${1##*/}"
+
+
