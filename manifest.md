@@ -2,11 +2,12 @@
 description: >
   SHORT DESCRIPTION
 updated:       2019-08-09
-version:       2019.08.09.3
+version:       2019.08.09.4
 author:        budRich
 repo:          https://github.com/budlabs
 created:       2019-08-09
 type:          default
+license:       mit
 dependencies:  [bash, gawk, sed]
 see-also:      [bash(1), awk(1), sed(1)]
 environ:

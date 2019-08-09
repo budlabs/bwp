@@ -6,5 +6,7 @@
 projectdir=$1
 rm -f "$projectdir"/___{version,envs,help,getopt}
 mv -f "$1/program.sh" "${1##*/}"
+cp -f "${1##*/}" "${1##*/}".1 README.md LICENSE Makefile -t next
+
 
 

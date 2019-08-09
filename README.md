@@ -64,5 +64,8 @@ line.
 `--version`|`-v`  
 Show version and exit.
 
+## license
+
+**bwp** is licensed with the **MIT license**
 
 
