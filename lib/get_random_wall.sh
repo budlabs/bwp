@@ -4,10 +4,12 @@ get_random_wall() {
 
   local rnd
 
-  rnd="$(ls --ignore "${_curnam:-}" "${_wdir:-}" \
-        | sort -R \
-        | head -1)"
+  rnd="$(
+    find "${_wdir:-}" \
+    ! -name "${_curnam:-}" -type f -printf '%f\n' \
+    | sort -R | head -1
+  )"
 
-  ((_o[n] == 1)) && add_to_history "${rnd:$_curnam}"
+  ((${_o[n]:-0} == 1)) && add_to_history "${rnd:=$_curnam}"
   echo "$rnd"
 }

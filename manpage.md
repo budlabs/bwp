@@ -70,23 +70,23 @@ Show version and exit.
 ENVIRONMENT
 -----------
 
-`BWP_DIR`  
-amani[environ][0][BWP_DIR][description]
+``  
+
 defaults to: $HOME/tmp/bwp
 
-`BWP_GEOMETRY`  
-amani[environ][1][BWP_GEOMETRY][description]
-defaults to: -
+``  
 
-`BWP_COMMAND`  
-amani[environ][2][BWP_COMMAND][description]
+defaults to: 
+
+``  
+
 defaults to: feh --no-fehbg --bg-fill
 
 DEPENDENCIES
 ------------
-`bash`
-`gawk`
-`sed`
+``
+``
+``
 
 
 

@@ -3,15 +3,15 @@
 ___printversion(){
   
 cat << 'EOB' >&2
-bwp - version: 2019.08.09.4
-updated: 2019-08-09 by budRich
+bwp - version: 2019.08.13.5
+updated: 2019-08-13 by budRich
 EOB
 }
 
 
 # environment variables
 : "${BWP_DIR:=$HOME/tmp/bwp}"
-: "${BWP_GEOMETRY:=-}"
+: "${BWP_GEOMETRY:=}"
 : "${BWP_COMMAND:=feh --no-fehbg --bg-fill}"
 
 

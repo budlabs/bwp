@@ -1,8 +1,8 @@
 ---
 description: >
   SHORT DESCRIPTION
-updated:       2019-08-09
-version:       2019.08.09.4
+updated:       2019-08-13
+version:       2019.08.13.5
 author:        budRich
 repo:          https://github.com/budlabs
 created:       2019-08-09
@@ -12,7 +12,7 @@ dependencies:  [bash, gawk, sed]
 see-also:      [bash(1), awk(1), sed(1)]
 environ:
     BWP_DIR: $HOME/tmp/bwp
-    BWP_GEOMETRY: -
+    BWP_GEOMETRY: 
     BWP_COMMAND: feh --no-fehbg --bg-fill
 synopsis: |
     --wallpaper|-w [--prev|-p|--next|-n|--random|-r|**WALLPAPER**]
