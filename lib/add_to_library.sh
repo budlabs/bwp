@@ -27,7 +27,6 @@ add_to_library() {
   : "${BWP_GEOMETRY:=$(get_geometry)}"
 
   mapfile imageinfo < identify -format '%m\n%wx%h' "$src"
-  # imageinfo=($(identify -format '%m %wx%h\n' "$src"))
 
   [[ ${imageinfo[0]:-} =~ PNG|JPEG ]] \
     || ERX "'$src' is not an image."
