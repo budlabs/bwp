@@ -29,7 +29,7 @@ add_to_library() {
   mapfile imageinfo < identify -format '%m\n%wx%h' "$src"
   # imageinfo=($(identify -format '%m %wx%h\n' "$src"))
 
-  [[ ${imageinfo[0]} =~ PNG|JPEG ]] \
+  [[ ${imageinfo[0]:-} =~ PNG|JPEG ]] \
     || ERX "'$src' is not an image."
 
   trg="$_wdir/${src##*/}" trg="${trg%.*}"
@@ -49,7 +49,7 @@ add_to_library() {
         "$trg"
     fi
 
-    ((_o[w] == 1)) && set_wall "$name" && _o[w]=0
+    ((${_o[w]:-0} == 1)) && set_wall "$name" && _o[w]=0
     generate_blur "$trg" "${trg/walls/blurs}"
     
   fi

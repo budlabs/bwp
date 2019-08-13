@@ -2,7 +2,7 @@
 description: >
   SHORT DESCRIPTION
 updated:       2019-08-13
-version:       2019.08.13.5
+version:       2019.08.13.6
 author:        budRich
 repo:          https://github.com/budlabs
 created:       2019-08-09
