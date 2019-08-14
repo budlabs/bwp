@@ -1,4 +1,4 @@
-.TH BWP 1 2019\-08\-13 Linux "User Manuals"
+.TH BWP 1 2019\-08\-14 Linux "User Manuals"
 .SH NAME
 .PP
 \fB\fCbwp\fR \- SHORT DESCRIPTION
@@ -8,11 +8,11 @@
 .RS
 
 .nf
-bwp \-\-wallpaper|\-w [\-\-prev|\-p|\-\-next|\-n|\-\-random|\-r|**WALLPAPER**]
+bwp [\-\-prev|\-p|\-\-next|\-n|\-\-random|\-r|**WALLPAPER**]
 bwp \-\-blur|\-b [\-\-prev|\-p|\-\-next|\-n|\-\-random|\-r|**WALLPAPER**]     
-bwp \-\-lock|\-l [\-\-prev|\-p|\-\-next|\-n|\-\-random|\-r|**WALLPAPER**]     
+bwp \-\-lock|\-l [\-\-lock\-options|\-L OPTIONS] [\-\-image\-options|\-I OPTIONS] [\-\-wallpaper|\-w|\-\-random|\-r|**WALLPAPER**]     
 bwp \-\-delete|\-d [\-\-force|\-f] [**WALLPAPER**]                      
-bwp \-\-add|\-a [\-\-force|\-f] **FILE|DIR**                           
+bwp \-\-add|\-a    [\-\-force|\-f] **FILE|DIR**                           
 bwp \-\-rename|\-x NEWNAME [**WALLPAPER**]                           
 bwp \-\-help|\-h                                                 
 bwp \-\-version|\-v                                              
@@ -22,14 +22,32 @@ bwp \-\-version|\-v
 
 .SH DESCRIPTION
 .PP
-LONG DESCRIPTION
+\fB\fCbwp\fR looks at the files in \fBBWP\_DIR\fP
+(\fIdefaults to: \fB\fC\~/.cache/bwp\fR\fP) when selecting a
+wallpaper. If \fB\fCbwp\fR is executed without any
+arguments it will execute \fBBWP\_COMMAND\fP
+(\fIdefaults to: \fB\fCfeh \-\-no\-fehbg \-\-bg\-fill\fR\fP) and
+set the wallpaper to the the image that
+\fBBWP\_DIR\fP/currentwall is linked to (*or choose a
+random image from \fBBWP\_DIR\fP/walls if currentwall
+doesn't exist*). The file \fBBWP\_DIR\fP/history
+contains the wallpaper \fBhistory\fP\&. \fB\fC\-\-previous\fR
+and \fB\fC\-\-next\fR can be used to set a wallpaper from
+the history. \fB\fC\-\-random\fR will select a random
+wallpaper from \fBBWP\_DIR\fP/walls . If the last
+argument to \fB\fCbwp\fR is a file it will get copied to
+\fBBWP\_DIR\fP/walls and resized to the same
+dimensions as the active monitor. If the last
+argument is a name of a file in \fBBWP\_DIR\fP/walls,
+that file will get used for further actions. When
+\fB\fCbwp\fR is executed with the \fB\fC\-\-lock\fR option, it
+will lock the computer using \fB\fCi3lock(1)\fR\&. When
+locking, the selected image will be linked to:
+\fBBWP\_DIR\fP/currentlock (\fIwhich is the file that
+will be used as locksreen background if no
+WALLPAPER argument is specified\fP).
 
 .SH OPTIONS
-.PP
-\fB\fC\-\-wallpaper\fR|\fB\fC\-w\fR
-.br
-set desktop wallpaper
-
 .PP
 \fB\fC\-\-prev\fR|\fB\fC\-p\fR
 .br
@@ -50,17 +68,35 @@ get a random wallpaper from BWP\_DIR/walls
 .PP
 \fB\fC\-\-blur\fR|\fB\fC\-b\fR
 .br
-toggle/set blur
+toggle/set blur. If no WALLPAPER is specified the
+blur state of the current wallpaper will get
+toggled.
 
 .PP
 \fB\fC\-\-lock\fR|\fB\fC\-l\fR
 .br
-lock screen
+locks the computer with \fB\fCi3lock(1)\fR\&. If no
+WALLPAPER is specified, the last image that was
+last used as lockscreen background will be used.
+
+.PP
+\fB\fC\-\-lock\-options\fR|\fB\fC\-L\fR OPTIONS
+
+.PP
+\fB\fC\-\-image\-options\fR|\fB\fC\-I\fR OPTIONS
+
+.PP
+\fB\fC\-\-wallpaper\fR|\fB\fC\-w\fR
+.br
+when set in conjunction with \fB\fC\-\-lock\fR, the
+current wallpaper will be used as lockscreen
+background.
 
 .PP
 \fB\fC\-\-delete\fR|\fB\fC\-d\fR
 .br
-delete wallpaper from library
+delete WALLPAPER from library and history. Use
+\fB\fC\-\-force\fR option to skip prompt.
 
 .PP
 \fB\fC\-\-force\fR|\fB\fC\-f\fR
@@ -72,7 +108,10 @@ files with the same name will get overwritten.
 .PP
 \fB\fC\-\-add\fR|\fB\fC\-a\fR
 .br
-add a new image to the library
+if a argument is a FILE it will get added to the
+library. If argument is a DIRECTORY all images in
+that directory will get added to the library. Use
+\fB\fC\-\-force\fR option to overwrite existing files.
 
 .PP
 \fB\fC\-\-rename\fR|\fB\fC\-x\fR NEWNAME
@@ -109,9 +148,21 @@ defaults to:
 .PP
 defaults to: feh \-\-no\-fehbg \-\-bg\-fill
 
+.PP
+``
+
+.PP
+defaults to:
+
+.PP
+``
+
+.PP
+defaults to:
+
 .SH DEPENDENCIES
 .PP
- ``
+  ``
 
 .PP
 budRich 
@@ -119,4 +170,4 @@ budRich
 
 .SH SEE ALSO
 .PP
-bash(1), awk(1), sed(1),
+bash(1), awk(1), sed(1), ImageMagick(1), i3lock(1),

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 YNP() {
 
   local sp key default opts status

@@ -1,3 +1,4 @@
+#!/bin/bash
 
 get_previous_wall() {
   if [[ -f "$_history" ]]; then

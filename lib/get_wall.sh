@@ -1,3 +1,5 @@
+#!/bin/bash
+
 get_wall() {
   if ((__o[random] == 1)); then
     get_random_wall

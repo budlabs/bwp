@@ -1,3 +1,4 @@
+#!/bin/bash
 
 get_next_wall() {
   local trg firstline

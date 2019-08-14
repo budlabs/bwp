@@ -8,19 +8,25 @@ main() {
   [[ -d $_wdir ]] || {
     mkdir -p "$_wdir"
     mkdir -p "$BWP_DIR/blurs"
-    mkdir -p "$BWP_DIR/locks"
-    ERM "BWP_DIR didn't exist, created: $_wdir"
+    ERM "BWP_DIR created at: $BWP_DIR"
   }
 
-  # bwp -a [-f] FILE|DIR  add to the library
+  # add is the only action that takes directories
+  # as an argument.
+  [[ -d "$*" ]] && __o[add]=1
+
   ((__o[add] == 1)) && {
     add_to_library "$*" > /dev/null
     exit
   }
 
-  { [[ -n ${__o[rename]} ]] || ((__o[delete] == 1)) ;} \
-    && ((__o[random]+__o[next]+__o[prev] > 0)) \
-    && ERH "-r -n -p is not allowed when deleting or renaming."
+  if [[ -n ${__o[rename]} ]] || ((__o[delete] == 1)); then
+    ((__o[random]+__o[next]+__o[prev] > 0)) && ERH \
+      "-r -n -p is not allowed when deleting or renaming."
+  elif ! ((__o[wallpaper]+__o[blur]+__o[lock] > 0)); then
+    # if no action is specified, defualt to wallpaper
+    __o[wallpaper]=1
+  fi
 
   _curpth="$(readlink "$BWP_DIR/currentwall")"
   _curnam="${_curpth##*/}"

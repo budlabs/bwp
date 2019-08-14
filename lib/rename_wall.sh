@@ -1,7 +1,7 @@
 #!/bin/bash
 
 rename_wall() {
-  local newname trg
+  local newname trg f
 
   newname="$1"
   trg="$2"
@@ -15,6 +15,4 @@ rename_wall() {
 
   [[ $trg = "$_curnam" ]] \
     && ln -fs "${f%/*}/$newname" "$BWP_DIR/currentwall"
-    
-  # rename_wall "${_o[x]}" "$_wall"
 }

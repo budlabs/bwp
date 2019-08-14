@@ -3,8 +3,8 @@
 ___printversion(){
   
 cat << 'EOB' >&2
-bwp - version: 2019.08.13.7
-updated: 2019-08-13 by budRich
+bwp - version: 2019.08.14.10
+updated: 2019-08-14 by budRich
 EOB
 }
 
@@ -13,6 +13,8 @@ EOB
 : "${BWP_DIR:=$HOME/tmp/bwp}"
 : "${BWP_GEOMETRY:=}"
 : "${BWP_COMMAND:=feh --no-fehbg --bg-fill}"
+: "${BWP_LOCK_OPTIONS:=}"
+: "${BWP_LOCK_IMAGE_OPTIONS:=}"
 
 
 main() {
@@ -23,19 +25,25 @@ main() {
   [[ -d $_wdir ]] || {
     mkdir -p "$_wdir"
     mkdir -p "$BWP_DIR/blurs"
-    mkdir -p "$BWP_DIR/locks"
-    ERM "BWP_DIR didn't exist, created: $_wdir"
+    ERM "BWP_DIR created at: $BWP_DIR"
   }
 
-  # bwp -a [-f] FILE|DIR  add to the library
+  # add is the only action that takes directories
+  # as an argument.
+  [[ -d "$*" ]] && __o[add]=1
+
   ((__o[add] == 1)) && {
     add_to_library "$*" > /dev/null
     exit
   }
 
-  { [[ -n ${__o[rename]} ]] || ((__o[delete] == 1)) ;} \
-    && ((__o[random]+__o[next]+__o[prev] > 0)) \
-    && ERH "-r -n -p is not allowed when deleting or renaming."
+  if [[ -n ${__o[rename]} ]] || ((__o[delete] == 1)); then
+    ((__o[random]+__o[next]+__o[prev] > 0)) && ERH \
+      "-r -n -p is not allowed when deleting or renaming."
+  elif ! ((__o[wallpaper]+__o[blur]+__o[lock] > 0)); then
+    # if no action is specified, defualt to wallpaper
+    __o[wallpaper]=1
+  fi
 
   _curpth="$(readlink "$BWP_DIR/currentwall")"
   _curnam="${_curpth##*/}"
@@ -54,6 +62,7 @@ main() {
 
 
 }
+
 ___printhelp(){
   
 cat << 'EOB' >&2
@@ -62,21 +71,17 @@ bwp - SHORT DESCRIPTION
 
 SYNOPSIS
 --------
-bwp --wallpaper|-w [--prev|-p|--next|-n|--random|-r|WALLPAPER]
+bwp [--prev|-p|--next|-n|--random|-r|WALLPAPER]
 bwp --blur|-b [--prev|-p|--next|-n|--random|-r|WALLPAPER]     
-bwp --lock|-l [--prev|-p|--next|-n|--random|-r|WALLPAPER]     
+bwp --lock|-l [--lock-options|-L OPTIONS] [--image-options|-I OPTIONS] [--wallpaper|-w|--random|-r|WALLPAPER]     
 bwp --delete|-d [--force|-f] [WALLPAPER]                      
-bwp --add|-a [--force|-f] FILE|DIR                           
+bwp --add|-a    [--force|-f] FILE|DIR                           
 bwp --rename|-x NEWNAME [WALLPAPER]                           
 bwp --help|-h                                                 
 bwp --version|-v                                              
 
 OPTIONS
 -------
-
---wallpaper|-w  
-set desktop wallpaper
-
 
 --prev|-p  
 takes the previous wallpaper according to
@@ -93,15 +98,29 @@ get a random wallpaper from BWP_DIR/walls
 
 
 --blur|-b  
-toggle/set blur
+toggle/set blur. If no WALLPAPER is specified the
+blur state of the current wallpaper will get
+toggled.
 
 
 --lock|-l  
-lock screen
+locks the computer with i3lock(1). If no
+WALLPAPER is specified, the last image that was
+last used as lockscreen background will be used.
+
+
+--lock-options|-L OPTIONS  
+
+--image-options|-I OPTIONS  
+
+--wallpaper|-w  
+when set in conjunction with --lock, the current
+wallpaper will be used as lockscreen background.
 
 
 --delete|-d  
-delete wallpaper from library
+delete WALLPAPER from library and history. Use
+--force option to skip prompt.
 
 
 --force|-f  
@@ -109,12 +128,11 @@ if set --delete option will not prompt and when
 adding files to the library (--add) existing files
 with the same name will get overwritten.
 
-
-
-
-
 --add|-a  
-add a new image to the library
+if a argument is a FILE it will get added to the
+library. If argument is a DIRECTORY all images in
+that directory will get added to the library. Use
+--force option to overwrite existing files.
 
 
 --rename|-x NEWNAME  
@@ -157,17 +175,17 @@ add_to_library() {
 
   src="$1"
 
-  ((${_o[d]:-0} == 1)) \
+  ((__o[delete] == 1)) \
     && ERX "file path not a valid arg to delete action"
 
   if [[ -d "$src" ]]; then
     find "$src"  -iregex '.*\.\(jpg\|png\)' -print0 | {
       if command -v parallel > /dev/null; then
         parallel -0 --bar "BWP_GEOMETRY=$(get_geometry) \
-          bwp -a ${_o[f]:+-f}" "{}" :::: -
+          bwp -a ${__o[force]:+-f}" "{}" :::: -
       else
         xargs -0 -i{} BWP_GEOMETRY="$(get_geometry)" \
-          bwp -a ${_o[f]:+-f} "{}"
+          bwp -a ${__o[force]:+-f} "{}"
       fi
     }
     exit
@@ -177,7 +195,7 @@ add_to_library() {
 
   : "${BWP_GEOMETRY:=$(get_geometry)}"
 
-  mapfile imageinfo < identify -format '%m\n%wx%h' "$src"
+  mapfile imageinfo < <(identify -format '%m\n%wx%h' "$src")
 
   [[ ${imageinfo[0]:-} =~ PNG|JPEG ]] \
     || ERX "'$src' is not an image."
@@ -185,7 +203,7 @@ add_to_library() {
   trg="$_wdir/${src##*/}" trg="${trg%.*}"
   name="${trg##*/}"
 
-  if [[ -f $trg ]] && ((_o[f] != 1)); then
+  if [[ -f $trg ]] && ((__o[force] != 1)); then
     ERR "$trg already exist in library"
   else
     # resize image
@@ -199,19 +217,22 @@ add_to_library() {
         "$trg"
     fi
 
-    ((${_o[w]:-0} == 1)) && set_wall "$name" && _o[w]=0
+    ((__o[wallpaper] == 1)) \
+      && set_wall "$name" && __o[wallpaper]=0
+      
     generate_blur "$trg" "${trg/walls/blurs}"
     
   fi
 
   echo "$name"
 }
+
 delete_wall() {
   local trg
 
   trg="$1"
 
-  ((_o[d] == 1)) && ((_o[f] != 1)) && {
+  ((__o[delete] == 1)) && ((__o[force] != 1)) && {
     YNP -n "delete $trg?" || ERX "deletion aborted"
   }
   
@@ -222,6 +243,7 @@ delete_wall() {
     set_wall "$(get_previous_wall)"
   }
 }
+
 set -E
 trap '[ "$?" -ne 77 ] || exit 77' ERR
 
@@ -331,14 +353,14 @@ get_random_wall() {
   local rnd
 
   rnd="$(
-    find "${_wdir:-}" \
-    ! -name "${_curnam:-}" -type f -printf '%f\n' \
+    find "${_wdir:-}" ! -name "${_curnam:-}" -printf '%f\n' \
     | sort -R | head -1
   )"
 
-  ((${_o[n]:-0} == 1)) && add_to_history "${rnd:=$_curnam}"
+  ((__o[next] == 1)) && add_to_history "${rnd:=$_curnam}"
   echo "$rnd"
 }
+
 get_wall() {
   if ((__o[random] == 1)); then
     get_random_wall
@@ -367,7 +389,7 @@ get_wall() {
 }
 
 rename_wall() {
-  local newname trg
+  local newname trg f
 
   newname="$1"
   trg="$2"
@@ -381,21 +403,30 @@ rename_wall() {
 
   [[ $trg = "$_curnam" ]] \
     && ln -fs "${f%/*}/$newname" "$BWP_DIR/currentwall"
-    
-  # rename_wall "${_o[x]}" "$_wall"
 }
 
 set_lock() {
 
   local trg="$BWP_DIR/walls/$1"
 
-  i3lock \
-    --raw "$(get_geometry)":rgb \
-    --image <(convert "$trg" RGB:-)
+  [[ -n "${__o[image-options]}" ]] \
+    && BWP_LOCK_IMAGE_OPTIONS="${__o[image-options]}"
+
+  [[ -n "${__o[lock-options]}" ]] \
+    && BWP_LOCK_OPTIONS="${__o[lock-options]}"
+
+  eval i3lock                         \
+    --raw "$(get_geometry)":rgb       \
+    --image <(eval                    \
+      convert "$trg"                  \
+      "${BWP_LOCK_IMAGE_OPTIONS}"     \
+      -set png:format png32 RGB:-)    \
+    "${BWP_LOCK_OPTIONS}"             \
 
   ln -fs "$trg" "$BWP_DIR/currentlock"
 
 }
+
 
 set_wall(){
   local name trg
@@ -418,6 +449,7 @@ set_wall(){
     ((__o[prev]+__o[next] > 0)) || add_to_history "$name"
   fi
 }
+
 YNP() {
 
   local sp key default opts status
@@ -448,21 +480,24 @@ YNP() {
 
   return "${status:-0}"
 }
+
 declare -A __o
 eval set -- "$(getopt --name "bwp" \
-  --options "wpnrbldfax:hv" \
-  --longoptions "wallpaper,prev,next,random,blur,lock,delete,force,add,rename:,help,version," \
+  --options "pnrblL:I:wdfax:hv" \
+  --longoptions "prev,next,random,blur,lock,lock-options:,image-options:,wallpaper,delete,force,add,rename:,help,version," \
   -- "$@"
 )"
 
 while true; do
   case "$1" in
-    --wallpaper  | -w ) __o[wallpaper]=1 ;; 
     --prev       | -p ) __o[prev]=1 ;; 
     --next       | -n ) __o[next]=1 ;; 
     --random     | -r ) __o[random]=1 ;; 
     --blur       | -b ) __o[blur]=1 ;; 
     --lock       | -l ) __o[lock]=1 ;; 
+    --lock-options | -L ) __o[lock-options]="${2:-}" ; shift ;;
+    --image-options | -I ) __o[image-options]="${2:-}" ; shift ;;
+    --wallpaper  | -w ) __o[wallpaper]=1 ;; 
     --delete     | -d ) __o[delete]=1 ;; 
     --force      | -f ) __o[force]=1 ;; 
     --add        | -a ) __o[add]=1 ;; 
