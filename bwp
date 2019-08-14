@@ -3,7 +3,7 @@
 ___printversion(){
   
 cat << 'EOB' >&2
-bwp - version: 2019.08.14.10
+bwp - version: 2019.08.14.11
 updated: 2019-08-14 by budRich
 EOB
 }
@@ -266,6 +266,7 @@ generate_blur() {
   convert "$src"              \
     -blur 0x8                 \
     -set "png:format" png32   \
+    -quality 85               \
     "$trg"
 }
 

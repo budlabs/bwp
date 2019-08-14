@@ -8,5 +8,6 @@ generate_blur() {
   convert "$src"              \
     -blur 0x8                 \
     -set "png:format" png32   \
+    -quality 85               \
     "$trg"
 }
