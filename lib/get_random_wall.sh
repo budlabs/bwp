@@ -5,7 +5,10 @@ get_random_wall() {
   local rnd
 
   rnd="$(
-    find "${_wdir:-}" ! -name "${_curnam:-}" -printf '%f\n' \
+    find "${_wdir}"        \
+      ! -path "${_wdir}"   \
+      ! -name "${_curnam}" \
+      -printf '%f\n' \
     | sort -R | head -1
   )"
 

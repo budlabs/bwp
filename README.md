@@ -1,11 +1,11 @@
-# bwp - SHORT DESCRIPTION 
+# bwp - budlabs wallpaper selector 
 
 USAGE
 -----
 
 `bwp` looks at the files in **BWP_DIR** (*defaults to:
-`~/.cache/bwp`*) when selecting a wallpaper. If `bwp` is
-executed without any arguments it will execute
+`~/.cache/wallpapers`*) when selecting a wallpaper. If `bwp`
+is executed without any arguments it will execute
 **BWP_COMMAND** (*defaults to: `feh --no-fehbg --bg-fill`*)
 and set the wallpaper to the the image that
 **BWP_DIR**/currentwall is linked to (*or choose a random
@@ -25,17 +25,16 @@ will be used as locksreen background if no WALLPAPER
 argument is specified*).
 
 
-
 OPTIONS
 -------
 
-```text
-bwp [--prev|-p|--next|-n|--random|-r|**WALLPAPER**]
-bwp --blur|-b [--prev|-p|--next|-n|--random|-r|**WALLPAPER**]     
-bwp --lock|-l [--lock-options|-L OPTIONS] [--image-options|-I OPTIONS] [--wallpaper|-w|--random|-r|**WALLPAPER**]     
-bwp --delete|-d [--force|-f] [**WALLPAPER**]                      
-bwp --add|-a    [--force|-f] **FILE|DIR**                           
-bwp --rename|-x NEWNAME [**WALLPAPER**]                           
+```
+bwp [--prev|-p|--next|-n|--random|-r|WALLPAPER]
+bwp --blur|-b [--prev|-p|--next|-n|--random|-r|WALLPAPER|DIR]     
+bwp --lock|-l [--lock-options|-L OPTIONS] [--image-options|-I OPTIONS] [--wallpaper|-w|--random|-r|WALLPAPER]     
+bwp --delete|-d [--force|-f] [WALLPAPER]                      
+bwp --add|-a    [--force|-f] FILE|DIR                           
+bwp --rename|-x NEWNAME [WALLPAPER]                           
 bwp --help|-h                                                 
 bwp --version|-v                                              
 ```
@@ -60,8 +59,16 @@ specified, the last image that was last used as lockscreen
 background will be used.
 
 `--lock-options`|`-L` OPTIONS  
+Additional command line options passed to `i3lock`. If
+OPTIONS is the path to a file, the content of that file will
+be used. This options overrides the environment variable:
+`BWP_LOCK_OPTIONS`
 
 `--image-options`|`-I` OPTIONS  
+Additional command line options passed to `convert` before
+locking the screen. If OPTIONS is the path to a file, the
+content of that file will be used. This options overrides
+the environment variable: `BWP_LOCK_IMAGE_OPTIONS`
 
 `--wallpaper`|`-w`  
 when set in conjunction with `--lock`, the current
@@ -86,12 +93,17 @@ existing files.
 rename WALLPAPER to NEWNAME
 
 `--help`|`-h`  
-Show help and exit. whatever newline. this is also a new
-line.
-
+Show help and exit.
 
 `--version`|`-v`  
 Show version and exit.
+
+---
+
+if [pngquant](https://pngquant.org/) is installed it will
+be used to convert blurred images to png8 to save space.
+
+if [parallel](https://www.gnu.org/software/parallel/) is installed it will be used when adding multiple files  (when the last argument to `bwp` is a path to a directory). It should be faster then `xargs`,  (*which is used if `parallel is not installed*), but utilize more of the CPU.
 
 ## license
 

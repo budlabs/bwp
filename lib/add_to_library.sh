@@ -51,7 +51,7 @@ add_to_library() {
     ((__o[wallpaper] == 1)) \
       && set_wall "$name" && __o[wallpaper]=0
       
-    generate_blur "$trg" "${trg/walls/blurs}"
+    generate_blur "$trg" "${trg/walls/blurs}" "${imageinfo[0]:-}"
     
   fi
 

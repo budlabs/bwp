@@ -13,4 +13,3 @@ for ___f in "${___dir}/lib"/*; do
 done
 
 %%cat ___getopt%%
-
