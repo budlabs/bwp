@@ -83,6 +83,12 @@ EXAMPLES
 
 %%readme_issues%%
 %%fi%%
+%%if readme_dependencies%%
+
+## dependencies
+
+%%readme_dependencies%%
+%%fi%%
 %%if readme_footer%%
 
 %%readme_footer%%
