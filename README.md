@@ -1,32 +1,54 @@
 # bwp - budlabs wallpaper selector 
 
-USAGE
------
+`bwp` was created because I wanted a way to navigate
+wallpaper history. I also thought that it would be cool to
+be able to blur the current wallpaper as well as lock the
+screen with the current wallpaper, so that's in here too.  
 
-`bwp` looks at the files in **BWP_DIR** (*defaults to:
-`~/.cache/wallpapers`*) when selecting a wallpaper. If `bwp`
-is executed without any arguments it will execute
-**BWP_COMMAND** (*defaults to: `feh --no-fehbg --bg-fill`*)
-and set the wallpaper to the the image that
-**BWP_DIR**/currentwall is linked to (*or choose a random
-image from **BWP_DIR**/walls if currentwall doesn't exist*).
-The file **BWP_DIR**/history contains the wallpaper
-**history**. `--previous` and `--next` can be used to set a
-wallpaper from the history. `--random` will select a random
-wallpaper from **BWP_DIR**/walls . If the last argument to
-`bwp` is a file it will get copied to **BWP_DIR**/walls and
-resized to the same dimensions as the active monitor. If the
-last argument is a name of a file in **BWP_DIR**/walls, that
-file will get used for further actions. When `bwp` is
-executed with the `--lock` option, it will lock the computer
-using `i3lock(1)`. When locking, the selected image will be
-linked to: **BWP_DIR**/currentlock (*which is the file that
-will be used as locksreen background if no WALLPAPER
-argument is specified*).
+When a file is added to the *bwp library*
+(`BWP_DIR/walls`), it will get resized according to the
+environment variable `BWP_GEOMETRY`  (*defaults to the
+resolution of the currently active monitor*). And a blurred
+version of the image will get created. This makes for very
+fast *blur toggling* and lock screen activation.  
+
+`bwp` has a commandline interface, and can be used
+accordingly. If no argument is passed to `bwp` it will set
+the wallpaper to whatever file `BWP_DIR/currentwall` is
+linked to. So adding the following line to your startup
+script is nice:  
+
+```
+bwp
+```
 
 
-OPTIONS
--------
+See [the examples
+directory](https://github.com/budRich/bwp/tree/next/examples/)
+with usecases for:  
+
+* i3
+* polybar
+* thunar
+
+
+## usage
+
+The argument WALLPAPER is available for all actions except
+`--add` and can be either the name of a file in
+`BWP_DIR/walls` or the path to a file (*if the file doesn't
+exist in the library, it will get added before the action is
+applied*). If the WALLPAPER argument is omitted and no
+navigate action (`--next`,`--pre`,`--random`) is specified
+the action will get applied to the **currentwall** (*the
+file that `BWP_DIR/currentwall` links to.\**)  
+
+\*(*except for the `--lock` action that will use
+`BWP_DIR/currentlock`. To set the lockscreen to the
+**currentwall**, use the `--wallpaper` option*).
+
+
+## options
 
 ```
 bwp [--prev|-p|--next|-n|--random|-r|WALLPAPER]
@@ -103,7 +125,36 @@ Show version and exit.
 if [pngquant](https://pngquant.org/) is installed it will
 be used to convert blurred images to png8 to save space.
 
-if [parallel](https://www.gnu.org/software/parallel/) is installed it will be used when adding multiple files  (when the last argument to `bwp` is a path to a directory). It should be faster then `xargs`,  (*which is used if `parallel is not installed*), but utilize more of the CPU.
+if [parallel](https://www.gnu.org/software/parallel/) is installed it will be used when adding multiple files  (when the last argument to `bwp` is a path to a directory). It should be faster then `xargs`,  (*which is used if parallel is not installed*), but utilize more of the CPU.
+
+## environment
+
+`BWP_DIR`  
+Directory where wallpapers and history file will get
+stored.
+defaults to: $HOME/.cache/wallpapers
+
+`BWP_GEOMETRY`  
+($WIDTHx$HEIGHT) if set, images added to the library will
+be resized (if needed) to the dimensions specified. If not
+set, images will be resized (if needed) to the same
+dimensions as the currently active monitor.
+defaults to: 
+
+`BWP_COMMAND`  
+Command used to set the wallpaper.
+defaults to: feh --no-fehbg --bg-fill
+
+`BWP_LOCK_OPTIONS`  
+Additional command line options passed to `i3lock`.
+`--lock-options` will override this variable if set.
+defaults to: 
+
+`BWP_LOCK_IMAGE_OPTIONS`  
+Additional command line options passed to `convert` before
+locking the screen. `--image-options` will override this
+variable if set.
+defaults to: 
 
 ## license
 

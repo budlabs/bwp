@@ -16,16 +16,14 @@ wrap:     60
 %%fi%%
 %%if long_description%%
 
-USAGE
------
+## usage
 
 %%long_description%%
 
 %%fi%%
 %%if synopsis%%
 
-OPTIONS
--------
+## options
 
 ```
 %%synopsis%%
@@ -55,6 +53,16 @@ OPTIONS
 ---
 
 %%readme_usage%%
+%%fi%%
+%%if environ%%
+
+## environment
+%%for s in environ%%
+
+`%%s%%`  
+%%s[description]%%
+defaults to: %%s[default]%%
+%%done%%
 %%fi%%
 %%if examples%%
 

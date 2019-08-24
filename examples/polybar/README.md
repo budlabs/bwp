@@ -1,1 +1,0 @@
-This is a custom [polybar] module that was created for a [screencast] on the [budlabs youtube channel]. To be able to use all of it's features [polify] and [bwp] needs to be installed to your $PATH. If [i3menu] is installed it will be used to generate menus, otherwise [dmenu] will be used.
