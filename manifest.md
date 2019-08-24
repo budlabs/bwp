@@ -2,7 +2,7 @@
 description: >
   budlabs wallpaper selector
 updated:       2019-08-24
-version:       2019.08.24.2
+version:       2019.08.24.3
 author:        budRich
 repo:          https://github.com/budlabs
 created:       2019-08-09
