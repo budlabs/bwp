@@ -17,12 +17,15 @@ buttons[random]="%{A1:bwpcontrol random:}%{A}"
 # of the currentwallpaper
 buttons[text]="%{A1:bwpcontrol menu:}CURRENTWALL%{A}"
 
-[[ -n $(polify --module "$_polybarmodule") ]] \
-  && _state=controls || _state=minimized
+[[ -n $(polify --module "$_polybarmodule") ]] && _state=controls
 
 main() {
 
   case "$1" in
+
+    ( update )
+      [[ $_state = controls ]] && updatemodule
+    ;;
 
     ( toggle )
       if [[ $_state = controls ]]; then
