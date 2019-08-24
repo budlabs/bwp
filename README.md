@@ -27,9 +27,10 @@ See [the examples
 directory](https://github.com/budRich/bwp/tree/next/examples/)
 with usecases for:  
 
-* i3
-* polybar
-* thunar
+* [i3](https://github.com/budRich/bwp/tree/next/examples/i3)
+* [polybar](https://github.com/budRich/bwp/tree/next/examples/polybar)
+* [thunar](https://github.com/budRich/bwp/tree/next/examples/thunar)
+* [i3lock](https://github.com/budRich/bwp/tree/next/examples/i3lock)
 
 
 ## usage
@@ -155,6 +156,13 @@ Additional command line options passed to `convert` before
 locking the screen. `--image-options` will override this
 variable if set.
 defaults to: 
+
+## updates
+
+#### 2019.08.24.0
+
+Initial release.
+
 
 ## license
 

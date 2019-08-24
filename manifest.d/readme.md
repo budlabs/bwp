@@ -14,9 +14,10 @@ bwp
 
 See [the examples directory](https://github.com/budRich/bwp/tree/next/examples/) with usecases for:  
 
-* i3
-* polybar
-* thunar
+* [i3](https://github.com/budRich/bwp/tree/next/examples/i3)
+* [polybar](https://github.com/budRich/bwp/tree/next/examples/polybar)
+* [thunar](https://github.com/budRich/bwp/tree/next/examples/thunar)
+* [i3lock](https://github.com/budRich/bwp/tree/next/examples/i3lock)
 
 # long_description
 
