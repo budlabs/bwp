@@ -12,7 +12,7 @@ add_to_history() {
       !a[$0]++
     ' "${_history:-}" > /tmp/bwphist
 
-    mv -f /tmp/bwphist "$_history"
+    cat /tmp/bwphist > "$_history"
   else
     echo "$name" > "$_history"
   fi

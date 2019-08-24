@@ -16,7 +16,7 @@ set_wall(){
 
     ${BWP_COMMAND} "$trg"
 
-    ln -fs "$trg" "$BWP_DIR/currentwall"
+    ln -fsn "$trg" "$BWP_DIR/currentwall"
 
     ((__o[prev]+__o[next] > 0)) || add_to_history "$name"
   fi
