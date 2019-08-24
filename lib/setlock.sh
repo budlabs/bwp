@@ -2,21 +2,15 @@
 
 set_lock() {
 
-  local trg screenArea
+  local trg screenArea io lo
 
   trg="$BWP_DIR/walls/$1"
 
-  if [[ -f "${__o[image-options]}" ]]; then
-    BWP_LOCK_IMAGE_OPTIONS="$(cat "${__o[image-options]}")"
-  elif [[ -n "${__o[image-options]}" ]]; then
-    BWP_LOCK_IMAGE_OPTIONS="${__o[image-options]}"
-  fi
+  io="${__o[image-options]:-${BWP_LOCK_IMAGE_OPTIONS:-}}"
+  lo="${__o[lock-options]:-${BWP_LOCK_OPTIONS:-}}"
 
-  if [[ -f "${__o[lock-options]}" ]]; then
-    BWP_LOCK_OPTIONS="$(cat "${__o[lock-options]}")"
-  elif [[ -n "${__o[lock-options]}" ]]; then
-    BWP_LOCK_OPTIONS="${__o[lock-options]}"
-  fi
+  [[ -f "$io" ]] && io="$(cat "$io")"
+  [[ -f "$lo" ]] && lo="$(cat "$lo")"
 
   mapfile -t screens < <(xrandr | awk '
     
@@ -45,7 +39,7 @@ set_lock() {
   # if multiple screens are active stretch blurred
   # version of image
   if ((${#screens[@]} > 1)); then
-    BWP_LOCK_IMAGE_OPTIONS="         \
+    io="                             \
       ${trg/walls/blurs}             \
       -gravity Center                \
       -resize '${screenArea}^'       \
@@ -58,17 +52,17 @@ set_lock() {
       -gravity NorthWest             \
       -geometry '+${screens[1]#*+}'  \
       -composite                     \
-      ${BWP_LOCK_IMAGE_OPTIONS}"
+      $io"
   else
-    BWP_LOCK_IMAGE_OPTIONS="${trg} ${BWP_LOCK_IMAGE_OPTIONS}"
+    io="${trg} ${io}"
   fi
 
   eval i3lock                                     \
     --raw   "$screenArea":rgb                     \
     --image <(eval convert                        \
-                     "${BWP_LOCK_IMAGE_OPTIONS}"  \
+                     "${io}"                      \
                      -set png:format png32 RGB:-) \
-    "${BWP_LOCK_OPTIONS}"                         \
+    "${lo}"                                       \
 
   ln -fs "$trg" "$BWP_DIR/currentlock"
 }
