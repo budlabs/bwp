@@ -3,7 +3,7 @@
 ___printversion(){
   
 cat << 'EOB' >&2
-bwp - version: 2019.08.24.5
+bwp - version: 2019.08.24.6
 updated: 2019-08-24 by budRich
 EOB
 }
@@ -173,7 +173,7 @@ add_to_history() {
       !a[$0]++
     ' "${_history:-}" > /tmp/bwphist
 
-    mv -f /tmp/bwphist "$_history"
+    cat /tmp/bwphist > "$_history"
   else
     echo "$name" > "$_history"
   fi
@@ -510,7 +510,7 @@ set_wall(){
 
     ${BWP_COMMAND} "$trg"
 
-    ln -fs "$trg" "$BWP_DIR/currentwall"
+    ln -fsn "$trg" "$BWP_DIR/currentwall"
 
     ((__o[prev]+__o[next] > 0)) || add_to_history "$name"
   fi
