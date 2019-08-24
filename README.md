@@ -14,7 +14,7 @@ fast *blur toggling* and lock screen activation.
 
 `bwp` has a commandline interface, and can be used
 accordingly. If no argument is passed to `bwp` it will set
-the wallpaper to whatever file `BWP_DIR/currentwal` is
+the wallpaper to whatever file `BWP_DIR/currentwall` is
 linked to. So adding the following line to your startup
 script is nice:  
 
@@ -25,7 +25,7 @@ bwp
 
 See [the examples
 directory](https://github.com/budRich/bwp/tree/next/examples/)
-for usecases in:  
+with usecases for:  
 
 * i3
 * polybar
@@ -38,13 +38,14 @@ The argument WALLPAPER is available for all actions except
 `--add` and can be either the name of a file in
 `BWP_DIR/walls` or the path to a file (*if the file doesn't
 exist in the library, it will get added before the action is
-applied*). Ifthe WALLPAPER argument is omitted and no
+applied*). If the WALLPAPER argument is omitted and no
 navigate action (`--next`,`--pre`,`--random`) is specified
 the action will get applied to the **currentwall** (*the
-file that `BWP_DIR/currentwall` links to.\**) \*(*except for
-the lock action that will use `BWP_DIR/currentlock`, to set
-the lockscreen to the current wallpaper, use the
-`--wallpaper` option*).
+file that `BWP_DIR/currentwall` links to.\**)  
+
+\*(*except for the `--lock` action that will use
+`BWP_DIR/currentlock`. To set the lockscreen to the
+**currentwall**, use the `--wallpaper` option*).
 
 
 ## options

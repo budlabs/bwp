@@ -26,16 +26,18 @@ The argument WALLPAPER is available for all
 actions except \fB\fC\-\-add\fR and can be either the name
 of a file in \fB\fCBWP\_DIR/walls\fR or the path to a file
 (\fIif the file doesn't exist in the library, it
-will get added before the action is applied\fP).
-Ifthe WALLPAPER argument is omitted and no
-navigate action (\fB\fC\-\-next\fR,\fB\fC\-\-pre\fR,\fB\fC\-\-random\fR) is
-specified the action will get applied to the
-\fBcurrentwall\fP (\fIthe file that
-\fB\fCBWP\_DIR/currentwall\fR links to.*\fP) *(\fIexcept for
-the lock action that will use
-\fB\fCBWP\_DIR/currentlock\fR, to set the lockscreen to
-the current wallpaper, use the \fB\fC\-\-wallpaper\fR
-option\fP).
+will get added before the action is applied\fP). If
+the WALLPAPER argument is omitted and no navigate
+action (\fB\fC\-\-next\fR,\fB\fC\-\-pre\fR,\fB\fC\-\-random\fR) is specified
+the action will get applied to the \fBcurrentwall\fP
+(\fIthe file that \fB\fCBWP\_DIR/currentwall\fR links
+to.*\fP)
+
+.PP
+*(*except for the \fB\fC\-\-lock\fR action that will use
+\fB\fCBWP\_DIR/currentlock\fR\&. To set the lockscreen to
+the \fBcurrentwall\fP, use the \fB\fC\-\-wallpaper\fR
+option*).
 
 .SH OPTIONS
 .PP
