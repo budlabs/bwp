@@ -1,0 +1,26 @@
+--insidevercolor=#ffffff22   \
+--ringvercolor=#bb00bbbb     \
+\
+--insidewrongcolor=#ffffff22 \
+--ringwrongcolor=#880000bb   \
+\
+--insidecolor=#00000000      \
+--ringcolor=#ff00ffcc        \
+--linecolor=#00000000        \
+--separatorcolor=#ff00ffcc   \
+\
+--verifcolor=#ee00eeee        \
+--wrongcolor=#ee00eeee        \
+--timecolor=#ee00eeee        \
+--datecolor=#ee00eeee        \
+--layoutcolor=#ee00eeee      \
+--keyhlcolor=#880000bb       \
+--bshlcolor=#880000bb        \
+\
+--screen 1            \
+--blur 5              \
+--clock               \
+--indicator           \
+--timestr="%H:%M:%S"  \
+--datestr="%A, %m %Y" \
+--keylayout 2         \

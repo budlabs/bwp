@@ -11,6 +11,12 @@ bwp %f
 
 You can change wallpaper with bwp from within thunar, and if the image doesn't exist in the library it will be automatically added.
 
+If you use the polybar module you can use this custom action command to also update the module when you change wallpaper from thunar:  
+```
+bwp %f && bwpcontrol update
+```
+
+
 I also made a [video about this] on the [budlabs youtube channel] a while back.
 
 [video about this]: https://www.youtube.com/watch?v=NsRnn4VKLQ8&list=PLt6-rPpOpkb3bMI5_wF43mRy1l2PEgDmf&index=23&t=0s
