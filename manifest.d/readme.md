@@ -19,6 +19,27 @@ See [the examples directory](https://github.com/budRich/bwp/tree/next/examples/)
 * [thunar](https://github.com/budRich/bwp/tree/next/examples/thunar)
 * [i3lock](https://github.com/budRich/bwp/tree/next/examples/i3lock)
 
+I should also mention that **bwp** started out as "*mod*" of [betterlockscreen] by pavanjadhaw
+
+[betterlockscreen]: https://github.com/pavanjadhaw/betterlockscreen
+
+# readme_install
+
+If you use **Arch Linux** you can get **bwp** from [AUR](https://aur.archlinux.org/packages/bwp/).  
+
+Use the `make(1)` to do a systemwide installation of both the script and the manpage.  
+
+(*configure the installation destination in the Makefile, if needed*)
+
+```
+$ git clone https://github.com/budlabs/bwp.git
+$ cd bwp
+# make install
+$ bwp -v
+bwp - version: 2019.08.24.10
+updated: 2019-08-24 by budRich
+```
+
 # long_description
 
 The argument WALLPAPER is available for all actions except `--add` and can be either the name of a file in `BWP_DIR/walls` or the path to a file (*if the file doesn't exist in the library, it will get added before the action is applied*). If the WALLPAPER argument is omitted and no navigate action (`--next`,`--pre`,`--random`) is specified the action will get applied to the **currentwall** (*the file that `BWP_DIR/currentwall` links to.\**)  

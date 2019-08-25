@@ -14,6 +14,12 @@ wrap:     60
 
 %%readme_install%%
 %%fi%%
+%%if readme_dependencies%%
+
+## dependencies
+
+%%readme_dependencies%%
+%%fi%%
 %%if long_description%%
 
 ## usage
@@ -82,12 +88,6 @@ EXAMPLES
 ## known issues
 
 %%readme_issues%%
-%%fi%%
-%%if readme_dependencies%%
-
-## dependencies
-
-%%readme_dependencies%%
 %%fi%%
 %%if readme_footer%%
 
