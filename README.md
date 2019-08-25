@@ -5,6 +5,10 @@ wallpaper history. I also thought that it would be cool to
 be able to blur the current wallpaper as well as lock the
 screen with the current wallpaper, so that's in here too.  
 
+The development process was recorded and published to
+youtube as: [How to change wallpapers] on the [budlabs
+youtube channel].  
+
 When a file is added to the *bwp library*
 (`BWP_DIR/walls`), it will get resized according to the
 environment variable `BWP_GEOMETRY`  (*defaults to the
@@ -37,6 +41,8 @@ I should also mention that **bwp** started out as "*mod*"
 of [betterlockscreen] by pavanjadhaw
 
 [betterlockscreen]: https://github.com/pavanjadhaw/betterlockscreen
+[How to change wallpapers]: https://www.youtube.com/playlist?list=PLt6-rPpOpkb0mJGVx07iS-kNA4cgk8CFw
+[budlabs youtube channel]: https://www.youtube.com/channel/UCi8XrDg1bK_MJ0goOnbpTMQ
 
 
 
