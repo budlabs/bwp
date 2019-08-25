@@ -3,7 +3,7 @@
 `bwp` was created because I wanted a way to navigate wallpaper history.
 I also thought that it would be cool to be able to blur the current wallpaper as well as lock the screen with the current wallpaper, so that's in here too.  
 
-The development process was recorded and published to youtube as:
+The development process was recorded and published to **youtube** as:
 [How to change wallpapers] on the [budlabs youtube channel].  
 
 When a file is added to the *bwp library* (`BWP_DIR/walls`), it will get resized according to the environment variable `BWP_GEOMETRY` 
