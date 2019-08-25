@@ -1,4 +1,4 @@
-.TH BWP 1 2019\-08\-23 Linux "User Manuals"
+.TH BWP 1 2019\-08\-25 Linux "User Manuals"
 .SH NAME
 .PP
 \fB\fCbwp\fR \- budlabs wallpaper selector
@@ -22,32 +22,22 @@ bwp \-\-version|\-v
 
 .SH DESCRIPTION
 .PP
-\fB\fCbwp\fR looks at the files in \fBBWP\_DIR\fP
-(\fIdefaults to: \fB\fC\~/.cache/wallpapers\fR\fP) when
-selecting a wallpaper. If \fB\fCbwp\fR is executed
-without any arguments it will execute
-\fBBWP\_COMMAND\fP (\fIdefaults to: \fB\fCfeh \-\-no\-fehbg
-\-\-bg\-fill\fR\fP) and set the wallpaper to the the
+The argument WALLPAPER is available for all
+actions except \fB\fC\-\-add\fR and can be either the name
+of a file in \fB\fCBWP\_DIR/walls\fR or the path to a file
+(\fIif the file doesn't exist in the library, it
+will get added before the action is applied\fP). If
+the WALLPAPER argument is omitted and no navigate
+action (\fB\fC\-\-next\fR,\fB\fC\-\-pre\fR,\fB\fC\-\-random\fR) is specified
+the action will get applied to the \fBcurrentwall\fP
+(\fIthe file that \fB\fCBWP\_DIR/currentwall\fR links
+to.*\fP)
 
 .PP
-image that \fBBWP\_DIR\fP/currentwall is linked to
-(*or choose a random image from \fBBWP\_DIR\fP/walls
-if currentwall doesn't exist*). The file
-\fBBWP\_DIR\fP/history contains the wallpaper
-\fBhistory\fP\&. \fB\fC\-\-previous\fR and \fB\fC\-\-next\fR can be used
-to set a wallpaper from the history. \fB\fC\-\-random\fR
-will select a random wallpaper from
-\fBBWP\_DIR\fP/walls . If the last argument to \fB\fCbwp\fR
-is a file it will get copied to \fBBWP\_DIR\fP/walls
-and resized to the same dimensions as the active
-monitor. If the last argument is a name of a file
-in \fBBWP\_DIR\fP/walls, that file will get used for
-further actions. When \fB\fCbwp\fR is executed with the
-\fB\fC\-\-lock\fR option, it will lock the computer using
-\fB\fCi3lock(1)\fR\&. When locking, the selected image will
-be linked to: \fBBWP\_DIR\fP/currentlock (\fIwhich is
-the file that will be used as locksreen background
-if no WALLPAPER argument is specified\fP).
+*(*except for the \fB\fC\-\-lock\fR action that will use
+\fB\fCBWP\_DIR/currentlock\fR\&. To set the lockscreen to
+the \fBcurrentwall\fP, use the \fB\fC\-\-wallpaper\fR
+option*).
 
 .SH OPTIONS
 .PP
