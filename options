@@ -1,2 +1,9 @@
+[--prev|-p --next|-n --random|-r] *WALLPAPER*
+--blur|-b [--prev|-p --next|-n --random|-r] *WALLPAPER*
+--lock|-l [--lock-options|-L OPTIONS] [--image-options|-I OPTIONS] [--wallpaper|-w --random|-r] *WALLPAPER*
+--delete|-d [--force|-f] *WALLPAPER*
+--add|-a    [--force|-f] *FILE|DIR*
+--rename|-x NEWNAME *WALLPAPER*
+--verbose|-V
 --help|-h
 --version|-v

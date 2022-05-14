@@ -12,6 +12,6 @@ get_random_wall() {
     | sort -R | head -1
   )"
 
-  ((__o[next] == 1)) && add_to_history "${rnd:=$_curnam}"
+  ((_o[next] == 1)) && add_to_history "${rnd:=$_curnam}"
   echo "$rnd"
 }

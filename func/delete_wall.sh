@@ -5,7 +5,7 @@ delete_wall() {
 
   trg="$1"
 
-  ((__o[delete] == 1)) && ((__o[force] != 1)) && {
+  ((_o[delete] == 1)) && ((_o[force] != 1)) && {
     YNP -n "delete $trg?" || ERX "deletion aborted"
   }
   

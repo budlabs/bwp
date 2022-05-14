@@ -6,17 +6,17 @@ add_to_library() {
 
   src="$1"
 
-  ((__o[delete] == 1)) \
+  ((_o[delete] == 1)) \
     && ERX "file path not a valid arg to delete action"
 
   if [[ -d "$src" ]]; then
     find "$src"  -iregex '.*\.\(jpg\|png\)' -print0 | {
       if command -v parallel > /dev/null; then
         parallel -0 --bar "BWP_GEOMETRY=$(get_geometry) \
-          bwp -a ${__o[force]:+-f}" "{}" :::: -
+          bwp -a ${_o[force]:+-f}" "{}" :::: -
       else
         xargs -0 -i{} BWP_GEOMETRY="$(get_geometry)" \
-          bwp -a ${__o[force]:+-f} "{}"
+          bwp -a ${_o[force]:+-f} "{}"
       fi
     }
     exit
@@ -34,7 +34,7 @@ add_to_library() {
   trg="$_wdir/${src##*/}" trg="${trg%.*}"
   name="${trg##*/}"
 
-  if [[ -f $trg ]] && ((__o[force] != 1)); then
+  if [[ -f $trg ]] && ((_o[force] != 1)); then
     ERR "$trg already exist in library"
   else
     # resize image
@@ -48,8 +48,8 @@ add_to_library() {
         "$trg"
     fi
 
-    ((__o[wallpaper] == 1)) \
-      && set_wall "$name" && __o[wallpaper]=0
+    ((_o[wallpaper] == 1)) \
+      && set_wall "$name" && _o[wallpaper]=0
       
     generate_blur "$trg" "${trg/walls/blurs}" "${imageinfo[0]:-}"
     

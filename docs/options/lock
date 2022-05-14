@@ -1,0 +1,4 @@
+locks the computer with `i3lock(1)`.
+
+If no WALLPAPER is specified, the last image used
+for lockscreen background will be used.

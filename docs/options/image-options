@@ -1,0 +1,6 @@
+options passed to `convert` before locking the screen
+
+If OPTIONS is the path to a file, the content of
+that file will be used. This options overrides
+the environment variable:
+`BWP_LOCK_IMAGE_OPTIONS`

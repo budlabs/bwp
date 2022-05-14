@@ -1,0 +1,4 @@
+toggle/set blur.
+
+If no WALLPAPER is specified the blur state of the
+current wallpaper will get toggled.

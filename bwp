@@ -1,9 +1,53 @@
 #!/bin/bash
 
-main(){
+: "${BWP_DIR:=$HOME/.cache/wallpapers}"
+: "${BWP_GEOMETRY:=}"
+: "${BWP_COMMAND:=feh --no-fehbg --bg-fill}"
+: "${BWP_LOCK_OPTIONS:=}"
+: "${BWP_LOCK_IMAGE_OPTIONS:=}"
+
+main() {
+
+  _wdir="$BWP_DIR/walls"
+  _history="$BWP_DIR/history"
+
+  [[ -d $_wdir ]] || {
+    mkdir -p "$_wdir"
+    mkdir -p "$BWP_DIR/blurs"
+    ERM "BWP_DIR created at: $BWP_DIR"
+  }
+
+  # add is the only action that takes directories
+  # as an argument.
+  [[ -d "$*" ]] && _o[add]=1
+
+  ((_o[add] == 1)) && {
+    add_to_library "$*" > /dev/null
+    exit
+  }
+
+  if [[ -n ${_o[rename]} ]] || ((_o[delete] == 1)); then
+    ((_o[random]+_o[next]+_o[prev] > 0)) && ERH \
+      "-r -n -p is not allowed when deleting or renaming."
+  elif ! ((_o[wallpaper]+_o[blur]+_o[lock] > 0)); then
+    # if no action is specified, defualt to wallpaper
+    _o[wallpaper]=1
+  fi
+
+  _curpth="$(readlink "$BWP_DIR/currentwall")"
+  _curnam="${_curpth##*/}"
   
-  :
-  # add main logic here
+  _wall="$(get_wall "$@")"
+
+  if   ((_o[delete] == 1)); then
+    delete_wall "$_wall"
+  elif [[ -n ${_o[rename]} ]]; then
+    rename_wall "${_o[rename]}" "$_wall"
+  elif ((_o[lock] ==1)); then
+    set_lock "$_wall"
+  elif ((_o[wallpaper] == 1)) || ((_o[blur] == 1)); then
+    set_wall "$_wall"
+  fi
 }
 
 __dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")") #bashbud

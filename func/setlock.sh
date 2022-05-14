@@ -6,8 +6,8 @@ set_lock() {
 
   trg="$BWP_DIR/walls/$1"
 
-  io="${__o[image-options]:-${BWP_LOCK_IMAGE_OPTIONS:-}}"
-  lo="${__o[lock-options]:-${BWP_LOCK_OPTIONS:-}}"
+  io="${_o[image-options]:-${BWP_LOCK_IMAGE_OPTIONS:-}}"
+  lo="${_o[lock-options]:-${BWP_LOCK_OPTIONS:-}}"
 
   [[ -f "$io" ]] && io="$(cat "$io")"
   [[ -f "$lo" ]] && lo="$(cat "$lo")"
