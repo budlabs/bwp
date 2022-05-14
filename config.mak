@@ -78,7 +78,7 @@ README_DEPS =                        \
 	$(DOCS_DIR)/readme_dependencies.md \
 	$(DOCS_DIR)/readme_install.md
 
-README.md:
+README.md: $(README_DEPS)
 	@$(info making $@)
 	{
 		echo "# $(NAME) - $(DESCRIPTION)"

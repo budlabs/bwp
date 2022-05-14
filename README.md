@@ -27,12 +27,12 @@ following line to your startup script is nice:
 bwp
 ```
 
-See [the examples directory](https://github.com/budRich/bwp/tree/next/examples/) with usecases for:  
+[The wiki](https://github.com/budlabs/bwp/wiki) has some examples:  
 
-* [i3](https://github.com/budRich/bwp/tree/next/examples/i3)
-* [polybar](https://github.com/budRich/bwp/tree/next/examples/polybar)
-* [thunar](https://github.com/budRich/bwp/tree/next/examples/thunar)
-* [i3lock](https://github.com/budRich/bwp/tree/next/examples/i3lock)
+* [i3](https://github.com/budlabs/bwp/wiki/i3)
+* [polybar](https://github.com/budlabs/bwp/wiki/polybar)
+* [thunar](https://github.com/budlabs/bwp/wiki/thunar)
+* [i3lock](https://github.com/budlabs/bwp/wiki/i3lock)
 
 I should also mention that **bwp** started out as "*mod*" of [betterlockscreen] by pavanjadhaw
 
