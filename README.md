@@ -119,7 +119,3 @@ but utilize more of the CPU.
 [feh]: https://feh.finalrewind.org/
 [i3lock-color]: https://github.com/PandorasFox/i3lock-color
 [i3lock]: https://github.com/i3/i3lock
-## updates
-#### 2019.08.24.0
-
-Initial release.

@@ -1,31 +1,15 @@
 NAME         := bwp
 CREATED      := 2019-08-09
+UPDATED      := 2022-05-26
 DESCRIPTION  := budlabs wallpaper selector
-VERSION      := 2019.08.25.4
+VERSION      := 2022.05.26.1
 AUTHOR       := budRich
 CONTACT      := https://github.com/budlabs/bwp
 ORGANISATION := budlabs
 USAGE        := $(NAME) [OPTIONS] [WALLPAPER]
 LICENSE      := MIT
 
-# --- INSTALLATION RULES --- #
-installed_manpage    = $(DESTDIR)$(PREFIX)/share/man/man$(manpage_section)/$(MANPAGE)
-installed_script    := $(DESTDIR)$(PREFIX)/bin/$(NAME)
-installed_license   := $(DESTDIR)$(PREFIX)/share/licenses/$(NAME)/$(LICENSE)
-
-install: all
-	install -Dm644 $(MANPAGE_OUT) $(installed_manpage)
-	install -Dm644 LICENSE $(installed_license)
-	install -Dm755 $(MONOLITH) $(installed_script)
-
-uninstall:
-	@for f in $(installed_script) $(installed_manpage) $(installed_license); do
-		[[ -f $$f ]] || continue
-		echo "rm $$f"
-		rm "$$f"
-	done
-
-CUSTOM_TARGETS += $(MANPAGE_OUT)
+# CUSTOM_TARGETS += $(MANPAGE_OUT)
 
 MANPAGE_DEPS =                \
 	$(CACHE_DIR)/help_table.txt \
@@ -35,6 +19,11 @@ MANPAGE_DEPS =                \
 	$(DOCS_DIR)/environment.md  \
 	$(CACHE_DIR)/copyright.txt  \
 	$(DOCS_DIR)/manpage_footer.md
+
+# CUSTOM_TARGETS += $(MANPAGE_OUT)
+MANPAGE_OUT = $(MANPAGE)
+.PHONY: manpage
+manpage: $(MANPAGE_OUT)
 
 $(MANPAGE_OUT): config.mak $(MANPAGE_DEPS) 
 	@$(info making $@)
@@ -69,7 +58,7 @@ $(MANPAGE_OUT): config.mak $(MANPAGE_DEPS)
 
 	} | go-md2man > $@
 
-CUSTOM_TARGETS += README.md
+# CUSTOM_TARGETS += README.md
 
 README_DEPS =                        \
 	$(CACHE_DIR)/help_table.txt        \
@@ -91,7 +80,23 @@ README.md: $(README_DEPS)
 		cat $(DOCS_DIR)/usage.md
 		echo "## dependencies"
 		cat $(DOCS_DIR)/readme_dependencies.md
-		echo "## updates"
-		cat $(DOCS_DIR)/releasenotes/0_next.md
 
 	} > $@
+
+
+# --- INSTALLATION RULES --- #
+installed_manpage    = $(DESTDIR)$(PREFIX)/share/man/man$(manpage_section)/$(MANPAGE)
+installed_script    := $(DESTDIR)$(PREFIX)/bin/$(NAME)
+installed_license   := $(DESTDIR)$(PREFIX)/share/licenses/$(NAME)/$(LICENSE)
+
+install: all
+	install -Dm644 $(MANPAGE_OUT) $(installed_manpage)
+	install -Dm644 LICENSE $(installed_license)
+	install -Dm755 $(MONOLITH) $(installed_script)
+
+uninstall:
+	@for f in $(installed_script) $(installed_manpage) $(installed_license); do
+		[[ -f $$f ]] || continue
+		echo "rm $$f"
+		rm "$$f"
+	done
