@@ -1,0 +1,3 @@
+add FILE or files in DIRECTORY to the library.
+
+Use --force option to overwrite existing files.

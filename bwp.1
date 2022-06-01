@@ -1,182 +1,150 @@
-.TH BWP 1 2019\-08\-25 Linux "User Manuals"
+.nh
+.TH BWP  1 2022-05-26 budlabs "User Manuals"
 .SH NAME
 .PP
-\fB\fCbwp\fR \- budlabs wallpaper selector
+bwp - budlabs wallpaper selector
 
 .SH SYNOPSIS
 .PP
 .RS
 
 .nf
-bwp [\-\-prev|\-p|\-\-next|\-n|\-\-random|\-r|WALLPAPER]
-bwp \-\-blur|\-b [\-\-prev|\-p|\-\-next|\-n|\-\-random|\-r|WALLPAPER|DIR]     
-bwp \-\-lock|\-l [\-\-lock\-options|\-L OPTIONS] [\-\-image\-options|\-I OPTIONS] [\-\-wallpaper|\-w|\-\-random|\-r|WALLPAPER]     
-bwp \-\-delete|\-d [\-\-force|\-f] [WALLPAPER]                      
-bwp \-\-add|\-a    [\-\-force|\-f] FILE|DIR                           
-bwp \-\-rename|\-x NEWNAME [WALLPAPER]                           
-bwp \-\-help|\-h                                                 
-bwp \-\-version|\-v                                              
+bwp [--prev|-p --next|-n --random|-r] WALLPAPER
+bwp --blur|-b [--prev|-p --next|-n --random|-r] WALLPAPER
+bwp --lock|-l [--lock-options|-L OPTIONS] [--image-options|-I OPTIONS] [--wallpaper|-w --random|-r] WALLPAPER
+bwp --delete|-d [--force|-f] WALLPAPER
+bwp --add|-a    [--force|-f] FILE|DIR
+bwp --rename|-x NEWNAME WALLPAPER
+bwp --verbose|-V
+bwp --help|-h
+bwp --version|-v
 
 .fi
 .RE
 
-.SH DESCRIPTION
+.SH USAGE
 .PP
 The argument WALLPAPER is available for all
-actions except \fB\fC\-\-add\fR and can be either the name
-of a file in \fB\fCBWP\_DIR/walls\fR or the path to a file
-(\fIif the file doesn't exist in the library, it
-will get added before the action is applied\fP). If
-the WALLPAPER argument is omitted and no navigate
-action (\fB\fC\-\-next\fR,\fB\fC\-\-pre\fR,\fB\fC\-\-random\fR) is specified
-the action will get applied to the \fBcurrentwall\fP
-(\fIthe file that \fB\fCBWP\_DIR/currentwall\fR links
-to.*\fP)
+actions except \fB\fC--add\fR and can be either the name
+of a file in \fB\fCBWP_DIR/walls\fR or the path to a
+file (\fIif the file doesn't exist in the library,
+it will get added before the action is applied\fP).
+If the WALLPAPER argument is omitted and no
+navigate action (\fB\fC--next\fR,\fB\fC--pre\fR,\fB\fC--random\fR) is
+specified the action will get applied to
+the \fBcurrentwall\fP (\fIthe file that
+\fB\fCBWP_DIR/currentwall\fR links to.*\fP)
 
 .PP
-*(*except for the \fB\fC\-\-lock\fR action that will use
-\fB\fCBWP\_DIR/currentlock\fR\&. To set the lockscreen to
-the \fBcurrentwall\fP, use the \fB\fC\-\-wallpaper\fR
-option*).
+*except for the \fB\fC--lock\fR action that will use
+\fB\fCBWP_DIR/currentlock\fR\&.
 
 .SH OPTIONS
 .PP
-\fB\fC\-\-prev\fR|\fB\fC\-p\fR
-.br
-takes the previous wallpaper according to
-BWP\_DIR/history
+.RS
 
-.PP
-\fB\fC\-\-next\fR|\fB\fC\-n\fR
-.br
-takes the next wallpaper according to
-BWP\_DIR/history
+.nf
+-a, --add                   | add FILE or files in DIRECTORY to the library.
+-b, --blur                  | toggle/set blur.
+-d, --delete                | delete WALLPAPER from library and history.
+-f, --force                 | change behavior of --delete and --add options
+-h, --help                  | print help and exit  
+-I, --image-options OPTIONS | options passed to `convert` before locking the screen
+-l, --lock                  | locks the computer with `i3lock(1)`.
+-L, --lock-options  OPTIONS | Additional command line options passed to `i3lock`.
+-n, --next                  | set next wallpaper according to BWP_DIR/history
+-p, --prev                  | set previous wallpaper according to BWP_DIR/history
+-r, --random                | get a random wallpaper from BWP_DIR/walls
+-x, --rename        NEWNAME | rename WALLPAPER to NEWNAME
+-V, --verbose               | louder output
+-v, --version               | print version info and exit  
+-w, --wallpaper             | use current wallpaper when --lock is used
 
-.PP
-\fB\fC\-\-random\fR|\fB\fC\-r\fR
-.br
-get a random wallpaper from BWP\_DIR/walls
+.fi
+.RE
 
+.SS -a, --add
 .PP
-\fB\fC\-\-blur\fR|\fB\fC\-b\fR
-.br
-toggle/set blur. If no WALLPAPER is specified the
-blur state of the current wallpaper will get
-toggled.
+Use --force option to overwrite existing files.
 
+.SS -b, --blur
 .PP
-\fB\fC\-\-lock\fR|\fB\fC\-l\fR
-.br
-locks the computer with \fB\fCi3lock(1)\fR\&. If no
-WALLPAPER is specified, the last image that was
-last used as lockscreen background will be used.
+If no WALLPAPER is specified the blur state of the
+current wallpaper will get toggled.
 
+.SS -d, --delete
 .PP
-\fB\fC\-\-lock\-options\fR|\fB\fC\-L\fR OPTIONS
-.br
-Additional command line options passed to
-\fB\fCi3lock\fR\&. If OPTIONS is the path to a file, the
-content of that file will be used. This options
-overrides the environment variable:
-\fB\fCBWP\_LOCK\_OPTIONS\fR
+Use \fB\fC--force\fR option to skip prompt.
 
+.SS -I, --image-options OPTIONS
 .PP
-\fB\fC\-\-image\-options\fR|\fB\fC\-I\fR OPTIONS
-.br
-Additional command line options passed to
-\fB\fCconvert\fR before locking the screen. If OPTIONS is
-the path to a file, the content of that file will
-be used. This options overrides the environment
-variable: \fB\fCBWP\_LOCK\_IMAGE\_OPTIONS\fR
+If OPTIONS is the path to a file, the content of
+that file will be used. This options overrides
+the environment variable:
+\fB\fCBWP_LOCK_IMAGE_OPTIONS\fR
 
+.SS -l, --lock
 .PP
-\fB\fC\-\-wallpaper\fR|\fB\fC\-w\fR
-.br
-when set in conjunction with \fB\fC\-\-lock\fR, the
-current wallpaper will be used as lockscreen
-background.
+If no WALLPAPER is specified, the last image used
+for lockscreen background will be used.
 
+.SS -L, --lock-options  OPTIONS
 .PP
-\fB\fC\-\-delete\fR|\fB\fC\-d\fR
-.br
-delete WALLPAPER from library and history. Use
-\fB\fC\-\-force\fR option to skip prompt.
-
-.PP
-\fB\fC\-\-force\fR|\fB\fC\-f\fR
-.br
-if set \fB\fC\-\-delete\fR option will not prompt and when
-adding files to the library (\fB\fC\-\-add\fR) existing
-files with the same name will get overwritten.
-
-.PP
-\fB\fC\-\-add\fR|\fB\fC\-a\fR
-.br
-if a argument is a FILE it will get added to the
-library. If argument is a DIRECTORY all images in
-that directory will get added to the library. Use
-\fB\fC\-\-force\fR option to overwrite existing files.
-
-.PP
-\fB\fC\-\-rename\fR|\fB\fC\-x\fR NEWNAME
-.br
-rename WALLPAPER to NEWNAME
-
-.PP
-\fB\fC\-\-help\fR|\fB\fC\-h\fR
-.br
-Show help and exit.
-
-.PP
-\fB\fC\-\-version\fR|\fB\fC\-v\fR
-.br
-Show version and exit.
+If OPTIONS is the path to a file, the content of
+that file will be used. This options overrides
+the environment variable: \fB\fCBWP_LOCK_OPTIONS\fR
 
 .SH ENVIRONMENT
+.SS BWP_DIR
 .PP
-\fB\fCBWP\_DIR\fR
-.br
-Directory where wallpapers and history file will
-get stored. defaults to: $HOME/.cache/wallpapers
+Directory where wallpapers and history file will get
+stored.
+defaults to: \fB\fC$HOME/.cache/wallpapers\fR
 
+.SS BWP_GEOMETRY
 .PP
-\fB\fCBWP\_GEOMETRY\fR
-.br
-($WIDTHx$HEIGHT) if set, images added to the
-library will be resized (if needed) to the
-dimensions specified. If not set, images will be
-resized (if needed) to the same dimensions as the
-currently active monitor. defaults to:
+($WIDTHx$HEIGHT) if set, images added to the library will
+be resized (if needed) to the dimensions specified. If not
+set, images will be resized (if needed) to the same
+dimensions as the currently active monitor.
+defaults to: \fB\fC""\fR
 
+.SS BWP_COMMAND
 .PP
-\fB\fCBWP\_COMMAND\fR
-.br
-Command used to set the wallpaper. defaults to:
-feh \-\-no\-fehbg \-\-bg\-fill
+Command used to set the wallpaper.
+defaults to: \fB\fCfeh --no-fehbg --bg-fill\fR
 
+.SS BWP_LOCK_OPTIONS
 .PP
-\fB\fCBWP\_LOCK\_OPTIONS\fR
-.br
-Additional command line options passed to
-\fB\fCi3lock\fR\&. \fB\fC\-\-lock\-options\fR will override this
-variable if set. defaults to:
+Additional command line options passed to \fB\fCi3lock\fR\&.
+\fB\fC--lock-options\fR will override this variable if set.
+defaults to: \fB\fC""\fR
 
+.SS BWP_LOCK_IMAGE_OPTIONS
 .PP
-\fB\fCBWP\_LOCK\_IMAGE\_OPTIONS\fR
+Additional command line options passed to \fB\fCconvert\fR before
+locking the screen. \fB\fC--image-options\fR will override this
+variable if set.
+defaults to: \fB\fC""\fR
+
+.SH CONTACT
+.PP
+Send bugs and feature requests to:
 .br
-Additional command line options passed to
-\fB\fCconvert\fR before locking the screen.
-\fB\fC\-\-image\-options\fR will override this variable if
-set. defaults to:
+https://github.com/budlabs/bwp/issues
+
+.SH COPYRIGHT
+.PP
+Copyright (c) 2019-2022, budRich of budlabs
+.br
+SPDX-License-Identifier: MIT
 
 .SH DEPENDENCIES
 .PP
-\fB\fCbash\fR \fB\fCgawk\fR \fB\fCsed\fR \fB\fCImageMagick\fR \fB\fCi3lock\fR
-
-.PP
-budRich 
-\[la]https://github.com/budlabs\[ra]
+bash gawk sed ImageMagick
+.br
+i3lock (optional)
 
 .SH SEE ALSO
 .PP
-i3lock(1), ImageMagick(1), parallel(1), pngquant(1),
+\fB\fCi3lock(1)\fR, \fB\fCImageMagick(1)\fR, \fB\fCparallel(1)\fR, \fB\fCpngquant(1)\fR

@@ -1,0 +1,5 @@
+Additional command line options passed to `i3lock`.
+
+If OPTIONS is the path to a file, the content of
+that file will be used. This options overrides
+the environment variable: `BWP_LOCK_OPTIONS` 
