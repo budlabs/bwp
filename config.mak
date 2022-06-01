@@ -9,8 +9,6 @@ ORGANISATION := budlabs
 USAGE        := $(NAME) [OPTIONS] [WALLPAPER]
 LICENSE      := MIT
 
-# CUSTOM_TARGETS += $(MANPAGE_OUT)
-
 MANPAGE_DEPS =                \
 	$(CACHE_DIR)/help_table.txt \
 	$(CACHE_DIR)/synopsis.txt   \
