@@ -1,3 +1,5 @@
+# MAINTAINED AT https://git.budlabs.xyz/bud/bwp
+
 # bwp - budlabs wallpaper selector
 `bwp` was created because I wanted a way to
 navigate wallpaper history. I also thought that
